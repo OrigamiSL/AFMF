@@ -1,3 +1,16 @@
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+
 # AFMF: Time Series Anomaly Detection Framework With Modified Forecasting
 ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg?style=plastic)
 ![PyTorch 1.11.0](https://img.shields.io/badge/PyTorch%20-%23EE4C2C.svg?style=plastic)
@@ -61,7 +74,7 @@ pip install -r requirements.txt
 SMD, MSL, SMAP, SMD datasets were acquired at [datasets](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing) and SWaT, WADI can be requested at [Itrust](https://itrust.sutd.edu.sg/itrust-labs_datasets). MBA was acquired at [MBA](https://github.com/imperial-qore/TranAD/tree/main/data/MBA).
 
 ### Data Preparation
-There are several versions of SWaT/WADI. We choose SWaT in the version of ‘SWaT.A1 & A2_Dec 2015’. The train subset is ‘SWaT_Dataset_Normal_v1.xlsx’ and the test subset is ‘SWaT_Dataset_Attack_v0’. We choose WADI in the version of ‘WADI.A2_19 Nov 2019’. The train subset is 'WADI_14days_new.csv' and the test subset is 'WADI_attackdataLABLE.csv'. After you acquire raw data of all datasets, please separately place them in corresponding folders at ./AFMF/data. Then you can get the folder tree shown as below:
+There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.A1 & A2_Dec 2015`. The train subset is `SWaT_Dataset_Normal_v1.xlsx` and the test subset is `SWaT_Dataset_Attack_v0`. We choose WADI in the version of `WADI.A2_19 Nov 2019`. The train subset is `WADI_14days_new.csv` and the test subset is `WADI_attackdataLABLE.csv`. After you acquire raw data of all datasets, please separately place them in corresponding folders at `./AFMF/data`. Then you can get the folder tree shown as below:
 ```
 |-data
 | | preprocess.py
@@ -100,7 +113,7 @@ There are several versions of SWaT/WADI. We choose SWaT in the version of ‘SWa
 
 ```
 
-Then you can run './AFMF/data/preprocess.py' to preprocess these raw data. Only raw data of SWaT and WADI are preprocessed. We do not change any of their values but only remove useless information, e.g., blanks. Names of variates are renamed for the convenience of variates classification in Lopsided Forecasting (LF). After you successfully run './AFMF/data/preprocess.py', you will obtain folder tree:
+Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only raw data of SWaT and WADI are preprocessed. We do not change any of their values but only remove useless information, e.g., blanks. Names of variates are renamed for the convenience of variates classification in Lopsided Forecasting (LF). After you successfully run `./AFMF/data/preprocess.py`, you will obtain folder tree:
 ```
 |-data
 | | preprocess.py
@@ -150,16 +163,16 @@ We redo all experiments related to other baselines. These experiments are conduc
 |GANF|60| [GANF](https://github.com/enyandai/ganf )  |
 |DeepSVDD|100|[DeepSVDD](https://github.com/lukasruff/Deep-SVDD-PyTorch) |
 |COUTA|100|[COUTA](https://github.com/xuhongzuo/couta )|
-|Anomaly Transformer|100|[COUTA](https://github.com/thuml/Anomaly-Transformer)|
-|TranAD|10| [COUTA](https://github.com/imperial-qore/TranAD ) |
-|DAGMM|5| [COUTA](https://github.com/imperial-qore/TranAD ) |
-|USAD|\{5, 12\}| [COUTA](https://github.com/imperial-qore/TranAD ) |
-|CAE-M|5| [COUTA](https://github.com/imperial-qore/TranAD ) |
-|MTAD-GAT|100|[COUTA](https://github.com/ML4ITS/mtad-gat-pytorch)  |
-|GDN|128|[COUTA](https://github.com/d-ailin/GDN ) |
-|GTA|60|[COUTA](https://github.com/ZEKAICHEN/GTA ) |
-|CAT|64|[COUTA](https://github.com/mmichaelzhang/CAT)|
-|MERLIN|\{10, 50, 100\}|[COUTA](https://www.cs.ucr.edu/~eamonn/time_series_data_2018/)|
+|Anomaly Transformer|100|[Anomaly Transformer](https://github.com/thuml/Anomaly-Transformer)|
+|TranAD|10| [TranAD](https://github.com/imperial-qore/TranAD ) |
+|DAGMM|5| [DAGMM](https://github.com/imperial-qore/TranAD ) |
+|USAD|\{5, 12\}| [USAD](https://github.com/imperial-qore/TranAD ) |
+|CAE-M|5| [CAE-M](https://github.com/imperial-qore/TranAD ) |
+|MTAD-GAT|100|[MTAD](https://github.com/ML4ITS/mtad-gat-pytorch)  |
+|GDN|128|[GDN](https://github.com/d-ailin/GDN ) |
+|GTA|60|[GTA](https://github.com/ZEKAICHEN/GTA ) |
+|CAT|64|[CAT](https://github.com/mmichaelzhang/CAT)|
+|MERLIN|\{10, 50, 100\}|[MERLIN](https://www.cs.ucr.edu/~eamonn/time_series_data_2018/)|
 
 ## Usage
 Commands for training and testing models combined with AFMF of all datasets are in `./scripts/<model>.sh`.
