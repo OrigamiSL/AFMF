@@ -1,16 +1,3 @@
-<head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$','$']]
-            }
-        });
-    </script>
-</head>
-
-
 # AFMF: Time Series Anomaly Detection Framework With Modified Forecasting
 ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg?style=plastic)
 ![PyTorch 1.11.0](https://img.shields.io/badge/PyTorch%20-%23EE4C2C.svg?style=plastic)
@@ -222,13 +209,13 @@ Here we provide a more detailed and complete command description for training an
 The experiment parameters of certain model under each data set are formated in the `<model>.sh` files in the directory `./scripts/`. You can refer to these parameters for experiments, and you can also adjust the parameters to obtain better results.
 
 <p align="center">
-<img src="./img/Results.png" height = "500" alt="" align=center />
+<img src=".\img\Results.png" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 4.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
 </p>
 
 <p align="center">
-<img src="./img/Result_AFMF.png" height = "500" alt="" align=center />
+<img src=".\img\Result_AFMF.png" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 5.</b> Results of five forecasting networks '-wo-'/'-w-' AFMF
 </p>
