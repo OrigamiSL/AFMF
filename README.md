@@ -26,7 +26,7 @@ We propose Local Instance Normalization (LIN) which performs normalization per w
 ### Lopsided Forecasting (LF)
 As shown in Figure 2, inputs and outputs of Lopsided Forecasting (LF) are different from canonical forecasting format: (1) Inputs. Continuous variates are masked at prediction timestamp; Discrete variates are entirely inputted, including values at prediction timestamp. (2) Outputs. Only continuous variates are predicted. As the whole window, including observations of input and prediction parts, are all known in anomaly detection tasks, it is reasonable to utilize the value of discrete variates at prediction timestamps as inputs. When combining LF with LIN, we do not apply LIN to discrete variates, otherwise their implicit information will be damaged.
 <p align="center">
-<img src=".\img\LF.png" height = "200" alt="" align=center />
+<img src="./img/LF.png" height = "200" alt="" align=center />
 <br><br>
 <b>Figure 2.</b> Lopsided forecasting only forecasts continuous variates $ \{C_{{w_2}}\}^{N_C} $ and its inputs extra include discrete variates at prediction timestamp $ \{D_{{w_2}}\}^{N_D} $. Additional zero $ \{0\}^{N_C} $ (red asterisk) concatenated with continuous inputs $ \{C_{{w_1:w_2-1}}\}^{N_C} $ is to ensure the same length with discrete inputs $ \{D_{{w_1:w_2}}\}^{N_D} $.
 </p>
@@ -211,11 +211,11 @@ The experiment parameters of certain model under each data set are formated in t
 <p align="center">
 <img src="./img/Results.png" height = "200" alt="" align=center />
 <br><br>
-<b>Figure 2.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
+<b>Figure 3.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
 </p>
 
 <p align="center">
 <img src="./img/Result_AFMF.png" height = "300" alt="" align=center />
 <br><br>
-<b>Figure 3.</b> Results of five forecasting networks '-wo-'/'-w-' AFMF
+<b>Figure 4.</b> Results of five forecasting networks '-wo-'/'-w-' AFMF
 </p>
