@@ -9,7 +9,7 @@ This is the origin Pytorch implementation of AFMF in the following paper:
 
 ## Components of AFMF
 <p align="center">
-<img src="./img/Architecture.png" height = "500" alt="" align=center />
+<img src="./img/Architecture.png" height = "200" alt="" align=center />
 <br><br>
 <b>Figure 1.</b> An overall algorithm flows of forecasting-based anomaly detection with AFMF. All of components changed/added by AFMF are emphasized in red. Oplus ($ \oplus $) refers to concatenation operation.
 </p>
