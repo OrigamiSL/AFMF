@@ -9,7 +9,7 @@ This is the origin Pytorch implementation of AFMF in the following paper:
 
 ## Components of AFMF
 <p align="center">
-<img src="./img/Architecture.png" height = "200" alt="" align=center />
+<img src="./img/Architecture.png" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 1.</b> An overall algorithm flows of forecasting-based anomaly detection with AFMF. All of components changed/added by AFMF are emphasized in red. Oplus ($ \oplus $) refers to concatenation operation.
 </p>
@@ -209,7 +209,7 @@ Here we provide a more detailed and complete command description for training an
 The experiment parameters of certain model under each data set are formated in the `<model>.sh` files in the directory `./scripts/`. You can refer to these parameters for experiments, and you can also adjust the parameters to obtain better results.
 
 <p align="center">
-<img src="./img/Results.png" height = "500" alt="" align=center />
+<img src="./img/Results.png" height = "200" alt="" align=center />
 <br><br>
 <b>Figure 4.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
 </p>
