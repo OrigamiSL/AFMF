@@ -215,7 +215,7 @@ The experiment parameters of certain model under each data set are formated in t
 </p>
 
 <p align="center">
-<img src="./img/Result_AFMF.png" height = "500" alt="" align=center />
+<img src="./img/Result_AFMF.png" height = "300" alt="" align=center />
 <br><br>
 <b>Figure 5.</b> Results of five forecasting networks '-wo-'/'-w-' AFMF
 </p>
