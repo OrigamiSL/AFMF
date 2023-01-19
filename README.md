@@ -1,3 +1,16 @@
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+
 # AFMF: Time Series Anomaly Detection Framework With Modified Forecasting
 ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg?style=plastic)
 ![PyTorch 1.11.0](https://img.shields.io/badge/PyTorch%20-%23EE4C2C.svg?style=plastic)
@@ -9,7 +22,7 @@ This is the origin Pytorch implementation of AFMF in the following paper:
 
 ## Components of AFMF
 <p align="center">
-<img src=".\img\Architecture.png" height = "200" alt="" align=center />
+<img src="./img/Architecture.png" height = "200" alt="" align=center />
 <br><br>
 <b>Figure 1.</b> An overall algorithm flows of forecasting-based anomaly detection with AFMF. All of components changed/added by AFMF are emphasized in red. Oplus ($ \oplus $) refers to concatenation operation.
 </p>
@@ -18,7 +31,7 @@ This is the origin Pytorch implementation of AFMF in the following paper:
 We propose Local Instance Normalization (LIN) which performs normalization per window $ x_{w_1:w_2}^N $ (Equation 1) as the preprocessing procedure to replace the conventional one which normalizes all data points with statistics of the entire dataset (Equation 2). $ [w_1,w_2] $ denotes time span of a certain window and $ [u_1,u_2] $ denotes time span of train subset. ${x}_{w_1:w_2}^i$ refer to obversations in the dataset of the $ i $-th variate spanning this window and $ \hat{x}_{w_1:w_2}^i $ are after normalization.
 
 <p align="center">
-<img src=".\img\Equation.png" height = "200" alt="" align=center />
+<img src="./img/Equation.png" height = "200" alt="" align=center />
 <br><br>
 
 </p>
@@ -34,7 +47,7 @@ As shown in Figure 2, inputs and outputs of Lopsided Forecasting (LF) are differ
 ### Progressive Adjacent Masking (PAM)
 In practice, our proposed Progressive Adjacent Masking (PAM) is a progressive algorithm which avoids to decide the number of adjacent elements to mask. The pseudo-code of it is shown in Algorithm 1. $ N $ refers to the number of variates. $ A_{w_2} $ is certain anomaly detected by prediction error at $ w_2 $ ($ S_{w_2}^N $) and anomaly threshold ($ \alpha $) given by certain forecasting network. $ \beta^N $ is the hyper-parameter to initialize the decline ratio to determine whether the prediction error degradation is distinct enough to validate that the new prediction error after masking is more reliable.
 <p align="center">
-<img src=".\img\Algorithm.png" height = "200" alt="" align=center />
+<img src="./img/Algorithm.png" height = "200" alt="" align=center />
 <br><br>
 </p>
 
@@ -209,13 +222,13 @@ Here we provide a more detailed and complete command description for training an
 The experiment parameters of certain model under each data set are formated in the `<model>.sh` files in the directory `./scripts/`. You can refer to these parameters for experiments, and you can also adjust the parameters to obtain better results.
 
 <p align="center">
-<img src=".\img\Results.png" height = "500" alt="" align=center />
+<img src="./img/Results.png" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 4.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
 </p>
 
 <p align="center">
-<img src=".\img\Result_AFMF.png" height = "500" alt="" align=center />
+<img src="./img/Result_AFMF.png" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 5.</b> Results of five forecasting networks '-wo-'/'-w-' AFMF
 </p>
