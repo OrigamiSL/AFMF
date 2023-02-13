@@ -5,7 +5,7 @@
 ![License CC BY-NC-SA](https://img.shields.io/badge/license-CC_BY--NC--SA--green.svg?style=plastic)
 
 This is the origin Pytorch implementation of AFMF in the following paper: 
-[AFMF: Time Series Anomaly Detection Framework With Modified Forecasting].
+[AFMF: Time Series Anomaly Detection Framework With Modified Forecasting], which has been submitted to ICML2023.
 
 ## Components of AFMF
 <p align="center">
