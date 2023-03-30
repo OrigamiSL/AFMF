@@ -241,36 +241,36 @@ python -u main.py --model <model> --data <data> --root_path <root_path> --input_
 
 Here we provide a more detailed and complete command description for training and testing the model:
 
-| Parameter name | Description of parameter |
-|:---:|:---:|
-| model | The model of experiment combined with AFMF.  |
-|      data      | The dataset name  |
-|   root_path    | The root path of the data file  |
-|   data_path    | The data file name  |
-|  checkpoints   | Location of model checkpoints |
-| input_len |Input sequence length of the model|
-| variate | Input variate number |
-| out_variate | Output variate number  |
-| dropout | Dropout  |
-| itr | Experiments times |
-| train_epochs | Train epochs|
-| batch_size | The batch size of training input data |
-| patience | Early stopping patience  |
-| learning_rate | Optimizer learning rate |
-| anomaly_ratio | The proportion for threshold determination|
-| retrain | Whether to train the model |
-| partial_train | Whether to use partial train subset|
-| partial_ratio | The proportion of train subset used |
-|detection_adjustment| Whether to use detection_adjustment|
-| adjust_k | The proportion used in the adjustment stratergy [PA%K](https://github.com/tuslkkk/tadpak/tree/master/)|
-| drop | Loop variate k |
-|thresh| Decline ratio |
-| data_process | Whether to preprocess data |
-| LIN | Whether to use local instance normalization |
-| load_anomaly | Whether to load anomaly |
-| save_predictions | Whether to save prediction results |
-| save_mses | Whether to save mses |
-| reproducible | Whether to make results reproducible |
+| Parameter name |                                              Description of parameter                                               |
+|:---:|:-------------------------------------------------------------------------------------------------------------------:|
+| model |                                     The model of experiment combined with AFMF.                                     |
+|      data      |                                                  The dataset name                                                   |
+|   root_path    |                                           The root path of the data file                                            |
+|   data_path    |                                                 The data file name                                                  |
+|  checkpoints   |                                            Location of model checkpoints                                            |
+| input_len |                                         Input sequence length of the model                                          |
+| variate |                                                Input variate number                                                 |
+| out_variate |                                                Output variate number                                                |
+| dropout |                                                       Dropout                                                       |
+| itr |                                                  Experiments times                                                  |
+| train_epochs |                                                    Train epochs                                                     |
+| batch_size |                                        The batch size of training input data                                        |
+| patience |                                               Early stopping patience                                               |
+| learning_rate |                                               Optimizer learning rate                                               |
+| anomaly_ratio |                                     The proportion for threshold determination                                      |
+| retrain |                                             Whether to train the model                                              |
+| partial_train |                                         Whether to use partial train subset                                         |
+| partial_ratio |                                         The proportion of train subset used                                         |
+|detection_adjustment|                                         Whether to use detection_adjustment                                         |
+| adjust_k | The proportion of threshold used in the adjustment stratergy [PA%K](https://github.com/tuslkkk/tadpak/tree/master/) |
+| drop |                                                   Loop variate k                                                    |
+|thresh|                                                    Decline ratio                                                    |
+| data_process |                                             Whether to preprocess data                                              |
+| LIN |                                     Whether to use local instance normalization                                     |
+| load_anomaly |                                               Whether to load anomaly                                               |
+| save_predictions |                                         Whether to save prediction results                                          |
+| save_mses |                                                Whether to save mses                                                 |
+| reproducible |                                        Whether to make results reproducible                                         |
 
 ## Results
 
