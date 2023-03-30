@@ -58,7 +58,7 @@ pip install -r requirements.txt
 ```
 
 ## Data
-SMD, MSL, SMAP, SMD datasets were acquired at [datasets](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing) and SWaT, WADI can be requested at [Itrust](https://itrust.sutd.edu.sg/itrust-labs_datasets). MBA, UCR, NAB was acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/) and MSDS can be requested at [zenodo](https://zenodo.org/record/3549604). Pruned and remedied SMD, MSL and SMAP were acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/).
+SMD, MSL, SMAP, SMD datasets were acquired at [datasets](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing) and SWaT, WADI can be requested at [Itrust](https://itrust.sutd.edu.sg/itrust-labs_datasets). MBA, UCR, NAB was acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/) and MSDS can be requested at [zenodo](https://zenodo.org/record/3549604). Pruned and remedied {SMD, MSL, SMAP} were acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/).
 
 ### Data Preparation
 There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.A1 & A2_Dec 2015`. The train subset is `SWaT_Dataset_Normal_v1.xlsx` and the test subset is `SWaT_Dataset_Attack_v0`. We choose WADI in the version of `WADI.A2_19 Nov 2019`. The train subset is `WADI_14days_new.csv` and the test subset is `WADI_attackdataLABLE.csv`. After you acquire raw data of all datasets, please separately place them in corresponding folders at `./AFMF/data`. Then you can get the folder tree shown as below:
