@@ -5,7 +5,7 @@
 ![License CC BY-NC-SA](https://img.shields.io/badge/license-CC_BY--NC--SA--green.svg?style=plastic)
 
 This is the origin Pytorch implementation of AFMF in the following paper: 
-[AFMF: Time Series Anomaly Detection Framework With Modified Forecasting], which has been submitted to ICML2023.
+[AFMF: Time Series Anomaly Detection Framework With Modified Forecasting], which has been submitted to Knowledge-Based Systems.
 
 ## Components of AFMF
 <p align="center">
@@ -58,7 +58,7 @@ pip install -r requirements.txt
 ```
 
 ## Data
-SMD, MSL, SMAP, SMD datasets were acquired at [datasets](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing) and SWaT, WADI can be requested at [Itrust](https://itrust.sutd.edu.sg/itrust-labs_datasets). MBA was acquired at [MBA](https://github.com/imperial-qore/TranAD/tree/main/data/MBA).
+SMD, MSL, SMAP, SMD datasets were acquired at [datasets](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing) and SWaT, WADI can be requested at [Itrust](https://itrust.sutd.edu.sg/itrust-labs_datasets). MBA, UCR, NAB was acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/) and MSDS can be requested at [zenodo](https://zenodo.org/record/3549604). Pruned and remedied SMD, MSL and SMAP were acquired at [TranAD datasets](https://github.com/imperial-qore/TranAD/tree/main/data/).
 
 ### Data Preparation
 There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.A1 & A2_Dec 2015`. The train subset is `SWaT_Dataset_Normal_v1.xlsx` and the test subset is `SWaT_Dataset_Attack_v0`. We choose WADI in the version of `WADI.A2_19 Nov 2019`. The train subset is `WADI_14days_new.csv` and the test subset is `WADI_attackdataLABLE.csv`. After you acquire raw data of all datasets, please separately place them in corresponding folders at `./AFMF/data`. Then you can get the folder tree shown as below:
@@ -70,10 +70,26 @@ There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.
 | | |-test.xlsx
 | | |-train.xlsx
 | |
+| |-MSDS
+| | |-concurrent_data
+| | | |-logs
+| | | |-logs_aggregated_concurrent.csv
+| | | |-metrics
+| | | | |-wally113_metrics_concurrent.csv
+| |
 | |-MSL
+| | |-test
+| | | |-C-1.npy
+| | |-train
+| | | |-C-1.npy
+| | |-labeled_anomalies.csv
 | | |-MSL_test.npy
 | | |-MSL_test_label.npy
 | | |-MSL_train.npy
+| |
+| |-NAB
+| | |-ec2_request_latency_system_failure.csv
+| | |-labels.json
 | |
 | |-PSM
 | | |-test.csv
@@ -81,11 +97,22 @@ There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.
 | | |-train.csv
 | |
 | |-SMAP
+| | |-test
+| | | |-P-1.npy
+| | |-train
+| | | |-P-1.npy
+| | |-labeled_anomalies.csv
 | | |-SMAP_test.npy
 | | |-SMAP_test_label.npy
 | | |-SMAP_train.npy
 | |
 | |-SMD
+| | |-labels
+| | | |-machine-1-1.txt
+| | |-test
+| | | |-machine-1-1.txt
+| | |-train
+| | | |-machine-1-1.txt
 | | |-SMD_test.npy
 | | |-SMD_test_label.npy
 | | |-SMD_train.npy
@@ -94,13 +121,16 @@ There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.
 | | |-SWaT_Dataset_Attack_v0.xlsx
 | | |-SWaT_Dataset_Normal_v1.xlsx
 | |
+| |-UCR
+| | |-137_UCR_Anomaly_InternalBleeding18_2300_4485_4587.txt
+| |
 | |-WADI
 | | |-WADI_14days_new.csv
 | | |-WADI_attackdataLABLE.csv
 
 ```
 
-Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only raw data of SWaT and WADI are preprocessed. We do not change any of their values but only remove useless information, e.g., blanks. Names of variates are renamed for the convenience of variates classification in Lopsided Forecasting (LF). After you successfully run `./AFMF/data/preprocess.py`, you will obtain folder tree:
+Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only raw data of SWaT, WADI and MSDS are preprocessed. We do not change any of their values but only remove useless information, e.g., blanks. We remove variates {'load.cpucore', 'load.min1', 'load.min5', 'load.min15'} in MSDS following [TranAD](https://github.com/imperial-qore/TranAD/tree/main). Names of variates are renamed for the convenience of variates classification in Lopsided Forecasting (LF). After you successfully run `./AFMF/data/preprocess.py`, you will obtain folder tree:
 ```
 |-data
 | | preprocess.py
@@ -109,10 +139,31 @@ Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only 
 | | |-test.xlsx
 | | |-train.xlsx
 | |
+| |-MSDS
+| | |-concurrent_data
+| | | |-logs
+| | | |-logs_aggregated_concurrent.csv
+| | | |-metrics
+| | | | |-wally113_metrics_concurrent.csv
+| | |-labels.csv
+| | |-test.csv
+| | |-train.csv
+| |
 | |-MSL
+| | |-labels
+| | | |-C-1.npy
+| | |-test
+| | | |-C-1.npy
+| | |-train
+| | | |-C-1.npy
+| | |-labeled_anomalies.csv
 | | |-MSL_test.npy
 | | |-MSL_test_label.npy
 | | |-MSL_train.npy
+| |
+| |-NAB
+| | |-ec2_request_latency_system_failure.csv
+| | |-labels.json
 | |
 | |-PSM
 | | |-test.csv
@@ -120,11 +171,24 @@ Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only 
 | | |-train.csv
 | |
 | |-SMAP
+| | |-labels
+| | | |-P-1.npy
+| | |-test
+| | | |-P-1.npy
+| | |-train
+| | | |-P-1.npy
+| | |-labeled_anomalies.csv
 | | |-SMAP_test.npy
 | | |-SMAP_test_label.npy
 | | |-SMAP_train.npy
 | |
 | |-SMD
+| | |-labels
+| | | |-machine-1-1.txt
+| | |-test
+| | | |-machine-1-1.txt
+| | |-train
+| | | |-machine-1-1.txt
 | | |-SMD_test.npy
 | | |-SMD_test_label.npy
 | | |-SMD_train.npy
@@ -135,31 +199,34 @@ Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only 
 | | |-SWaT_Dataset_Attack_v0.xlsx
 | | |-SWaT_Dataset_Normal_v1.xlsx
 | |
+| |-UCR
+| | |-137_UCR_Anomaly_InternalBleeding18_2300_4485_4587.txt
+| |
 | |-WADI
 | | |-Attack.csv
 | | |-Normal.csv
 | | |-WADI_14days_new.csv
 | | |-WADI_attackdataLABLE.csv
 ``` 
-You may manually delete raw data of SWaT and WADI if you want.
+You may manually delete raw data of SWaT, WADI and MSDS if you want.
 
 ## Baseline
 We redo all experiments related to other baselines. These experiments are conducted with their default experiment settings. The only change to their projects is that we replace their threshold selection approach with that of Anomaly Transformer. Their source codes origins are given below:
 |Baseline|Window|Source Code Origin|
 |:---:|:---:|:---:|
+|MERLIN|\{10, 50, 100\}|[MERLIN](https://www.cs.ucr.edu/~eamonn/time_series_data_2018/)|
+|DAGMM|5| [DAGMM](https://github.com/imperial-qore/TranAD ) |
 |GANF|60| [GANF](https://github.com/enyandai/ganf )  |
 |DeepSVDD|100|[DeepSVDD](https://github.com/lukasruff/Deep-SVDD-PyTorch) |
+| DGHL | 64 | [DGHL](https://github.com/cchallu/dghl) |
 |COUTA|100|[COUTA](https://github.com/xuhongzuo/couta )|
 |Anomaly Transformer|100|[Anomaly Transformer](https://github.com/thuml/Anomaly-Transformer)|
 |TranAD|10| [TranAD](https://github.com/imperial-qore/TranAD ) |
-|DAGMM|5| [DAGMM](https://github.com/imperial-qore/TranAD ) |
-|USAD|\{5, 12\}| [USAD](https://github.com/imperial-qore/TranAD ) |
 |CAE-M|5| [CAE-M](https://github.com/imperial-qore/TranAD ) |
 |MTAD-GAT|100|[MTAD](https://github.com/ML4ITS/mtad-gat-pytorch)  |
 |GDN|128|[GDN](https://github.com/d-ailin/GDN ) |
 |GTA|60|[GTA](https://github.com/ZEKAICHEN/GTA ) |
 |CAT|64|[CAT](https://github.com/mmichaelzhang/CAT)|
-|MERLIN|\{10, 50, 100\}|[MERLIN](https://www.cs.ucr.edu/~eamonn/time_series_data_2018/)|
 
 ## Usage
 Commands for training and testing models combined with AFMF of all datasets are in `./scripts/<model>.sh`.
@@ -195,6 +262,7 @@ Here we provide a more detailed and complete command description for training an
 | partial_train | Whether to use partial train subset|
 | partial_ratio | The proportion of train subset used |
 |detection_adjustment| Whether to use detection_adjustment|
+| adjust_k | The proportion used in the adjustment stratergy [PA%K](https://github.com/tuslkkk/tadpak/tree/master/)|
 | drop | Loop variate k |
 |thresh| Decline ratio |
 | data_process | Whether to preprocess data |
@@ -211,7 +279,7 @@ The experiment parameters of certain model under each data set are formated in t
 <p align="center">
 <img src="./img/Results.png" height = "200" alt="" align=center />
 <br><br>
-<b>Figure 3.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five benchmarks
+<b>Figure 3.</b> Quantitative results, i.e., P, R, F1 and AUC (as %), under five flawed benchmarks
 </p>
 
 <p align="center">

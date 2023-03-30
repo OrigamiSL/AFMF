@@ -1,5 +1,5 @@
 from data.data_loader import Dataset_SMD, Dataset_MSL, Dataset_SMAP, Dataset_PSM, Dataset_SWaT, Dataset_WADI, \
-    Dataset_MBA
+    Dataset_MBA, Dataset_UCR, Dataset_NAB, Dataset_MSDS, Dataset_SMD_partial, Dataset_MSL_partial, Dataset_SMAP_partial
 from exp.exp_basic import Exp_Basic
 from models.RT.model import RF
 from models.DLinear.DLinear import DLinear
@@ -13,7 +13,7 @@ from models.MTAD_GAT.MTAD_GAT import MTAD_GAT
 from models.GDN.GDN import GDN
 
 from utils.tools import EarlyStopping, adjust_learning_rate, \
-    loss_process, detection_adjustment, anomaly_adjustment
+    loss_process, detection_adjustment, anomaly_adjustment, pak
 
 import numpy as np
 
@@ -194,13 +194,16 @@ class Exp_Model(Exp_Basic):
         args = self.args
 
         data_dict = {
-            'SMD': Dataset_SMD,
-            'MSL': Dataset_MSL,
-            'SMAP': Dataset_SMAP,
+            'SMD': Dataset_SMD_partial if args.partial_data else Dataset_SMD,
+            'MSL': Dataset_MSL_partial if args.partial_data else Dataset_MSL,
+            'SMAP': Dataset_SMAP_partial if args.partial_data else Dataset_SMAP,
             'PSM': Dataset_PSM,
             'SWaT': Dataset_SWaT,
             'WADI': Dataset_WADI,
             'MBA': Dataset_MBA,
+            'UCR': Dataset_UCR,
+            'NAB': Dataset_NAB,
+            'MSDS': Dataset_MSDS
         }
         Data = data_dict[self.args.data]
 
@@ -499,7 +502,10 @@ class Exp_Model(Exp_Basic):
         gt = test_label[former_len:former_len + anomaly.shape[0]].astype(int)
         print('test_anomaly shape:', anomaly.shape, gt.shape)
         if self.args.detection_adjustment:
-            anomaly, gt = detection_adjustment(anomaly, gt)
+            if self.args.adjust_k == 0:
+                anomaly, gt = detection_adjustment(anomaly, gt)
+            else:
+                anomaly, gt = pak(anomaly, gt, self.args.adjust_k)
 
         if self.args.drop:
             roc_auc, tps, fps = self._roc_auc_all(gt, mse_all, mse_drop_all)
@@ -556,7 +562,10 @@ class Exp_Model(Exp_Basic):
                 anomaly = (mse > mse_thresh).astype(int)
 
             if self.args.detection_adjustment:
-                anomaly, gt = detection_adjustment(anomaly, gt)
+                if self.args.adjust_k == 0:
+                    anomaly, gt = detection_adjustment(anomaly, gt)
+                else:
+                    anomaly, gt = pak(anomaly, gt, self.args.adjust_k)
 
             pred_pos = np.argwhere(anomaly == 1)
 

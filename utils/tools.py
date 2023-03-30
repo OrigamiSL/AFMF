@@ -85,6 +85,22 @@ def detection_adjustment(pred, gt):
     return pred, gt
 
 
+def pak(scores, targets, k=20):
+    one_start_idx = np.where(np.diff(targets, prepend=0) == 1)[0]
+    zero_start_idx = np.where(np.diff(targets, prepend=0) == -1)[0]
+
+    assert len(one_start_idx) == len(zero_start_idx) + 1 or len(one_start_idx) == len(zero_start_idx)
+
+    if len(one_start_idx) == len(zero_start_idx) + 1:
+        zero_start_idx = np.append(zero_start_idx, len(scores))
+
+    for i in range(len(one_start_idx)):
+        if scores[one_start_idx[i]:zero_start_idx[i]].sum() > k / 100 * (zero_start_idx[i] - one_start_idx[i]):
+            scores[one_start_idx[i]:zero_start_idx[i]] = 1
+
+    return scores, targets
+
+
 def anomaly_adjustment(anomaly, mse_drop_all, mse, variate, thresh=3, drop=1):
     mse_decrease = dict.fromkeys(range(drop), [])
     for key in mse_drop_all:

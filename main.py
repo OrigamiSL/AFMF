@@ -38,6 +38,10 @@ parser.add_argument('--partial_train', action='store_true',
                     help='whether to use partial train subset',
                     default=False)
 parser.add_argument('--partial_ratio', type=float, default=0.2)
+parser.add_argument('--partial_data', action='store_true',
+                    help='whether to only use partial data which are not flawed for experiment',
+                    default=False)
+parser.add_argument('--adjust_k', type=int, default=0)
 
 # AFMF
 parser.add_argument('--LIN', action='store_true',

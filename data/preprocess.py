@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import time
 
 # SMD: SMD does not need any change due to npy format
 
@@ -55,4 +56,95 @@ P_Attack_WADI = np.concatenate([index_Attack_WADI.reshape(1, -1), Attack_WADI], 
 CSV_Attack_WADI = pd.DataFrame(P_Attack_WADI)
 CSV_Attack_WADI.to_csv('./WADI/Attack.csv', index=False, header=False)
 
-# MBA: MBA does not need any change due to no discrete variate
+# MBA: MBA does not need any change
+
+# UCR: UCR does not need any change
+
+# NAB: NAB does not need any change
+
+# MSDS
+logs = pd.read_csv('./MSDS/concurrent_data/logs/logs_aggregated_concurrent.csv')
+log = logs[['Timestamp'] + ['Hostname'] + ['log_level']]
+label = np.argwhere(list(log['log_level'] == 'ERROR'))
+error = log.iloc[label[:,0]]
+label = np.argwhere(list(error['Hostname'] == 'wally113'))
+error = error.iloc[label[:,0]]
+
+anomaly = error['Timestamp']
+error = error.reset_index(drop=True)
+file_path = './MSDS/concurrent_data/metrics/'
+file_name = 'wally113_metrics_concurrent.csv'
+labels = []
+df = pd.read_csv(file_path + file_name)
+df = df.drop(columns=['load.cpucore', 'load.min1', 'load.min5', 'load.min15'])
+id_vars = ['now']
+
+melted = df.melt(id_vars=id_vars).dropna()
+df = melted.pivot_table(index=id_vars, columns="variable", values="value")
+df_merged = df
+error['Timestamp'] = pd.DatetimeIndex(error['Timestamp']).strftime("%Y-%m-%d %H:%M:%S")
+error = error.drop(np.argwhere(list(error['Timestamp'] < '2019-11-25 15:58:58')).reshape(-1))
+error = error.sort_values(by='Timestamp')
+error = error.reset_index(drop=True)
+labels = np.zeros(len(df_merged))
+
+i = 0
+for ind, timestemp in enumerate(error['Timestamp'].values):
+    while i < len(df_merged):
+        if timestemp in df_merged.index[i]:
+            labels[max(0, i-4):min(len(df_merged), (i+4))] = 1
+            break
+        i += 1
+
+value = df_merged.values
+train_data = []
+test_data = []
+for i in range(len(df_merged)):
+    times = df_merged.index[i].split(' ')
+    timestemps = time.strptime(times[1], "%H:%M:%S")
+    init_time = time.strptime('20:00:00', "%H:%M:%S")
+    if times[0] == '2019-11-25' and timestemps < init_time:
+        test_data.append(value[i])
+    else:
+        train_data.append(value[i])
+labels = labels[:len(test_data)]
+train_data = np.array(train_data)
+test_data = np.array(test_data)
+np.savetxt('./MSDS/labels.csv', labels, fmt='%.f', delimiter=',')
+np.savetxt('./MSDS/train.csv', train_data, fmt='%.6f', delimiter=',')
+np.savetxt('./MSDS/test.csv', test_data, fmt='%.6f', delimiter=',')
+
+# pruned and remedied SMD: SMD_partial does not need any change
+# pruned and remedied MSL
+values = pd.read_csv('./MSL/labeled_anomalies.csv')
+values = values[values['spacecraft'] == 'MSL']
+filenames = values['chan_id'].values.tolist()
+test = np.load(f'./MSL/test/C-1.npy')
+labels = np.zeros(test.shape[0])
+indices = values[values['chan_id'] == 'C-1']['anomaly_sequences'].values[0]
+indices = indices.replace(']', '').replace('[', '').split(', ')
+indices = [int(i) for i in indices]
+for i in range(0, len(indices), 2):
+    labels[indices[i]:indices[i+1]] = 1
+path = './MSL/labels/'
+if not os.path.exists(path):
+    os.makedirs(path)
+print(labels.shape)
+np.save(path + f'C-1.npy', labels)
+
+# pruned and remedied SMAP
+values = pd.read_csv('./SMAP/labeled_anomalies.csv')
+values = values[values['spacecraft'] == 'SMAP']
+filenames = values['chan_id'].values.tolist()
+test = np.load(f'./SMAP/test/P-1.npy')
+labels = np.zeros(test.shape[0])
+indices = values[values['chan_id'] == 'P-1']['anomaly_sequences'].values[0]
+indices = indices.replace(']', '').replace('[', '').split(', ')
+indices = [int(i) for i in indices]
+for i in range(0, len(indices), 2):
+    labels[indices[i]:indices[i+1]] = 1
+path = './SMAP/labels/'
+if not os.path.exists(path):
+    os.makedirs(path)
+print(labels.shape)
+np.save(path + f'P-1.npy', labels)
