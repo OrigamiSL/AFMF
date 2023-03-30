@@ -64,6 +64,7 @@ There are several versions of SWaT/WADI. We choose SWaT in the version of `SWaT.
 ```
 |-data
 | | preprocess.py
+| | data_loader.py
 | |-MBA
 | | |-labels.xlsx
 | | |-test.xlsx
@@ -133,6 +134,7 @@ Then you can run `./AFMF/data/preprocess.py` to preprocess these raw data. Only 
 ```
 |-data
 | | preprocess.py
+| | data_loader.py
 | |-MBA
 | | |-labels.xlsx
 | | |-test.xlsx
